@@ -23,7 +23,8 @@ const { siteTitle = 'INDIRA RAYNA' } = Astro.props;
     />
 
     <!-- Netlify Identity Widget: memproses link undangan CMS di halaman mana pun -->
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <!-- is:inline = Astro tidak boleh membuang/me-bundle script eksternal ini -->
+    <script is:inline src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   </head>
   <body class="selection:bg-yellow-300 selection:text-black overflow-x-hidden">
     <slot />

@@ -8,12 +8,8 @@
 # ============================================================
 
 backend:
-  name: github
-  repo: rifkyparahian/indira-portfolio
+  name: git-gateway
   branch: main
-  base_url: https://indira-portfolio-website.netlify.app
-  auth_endpoint: .netlify/functions/auth
-  auth_scope: repo
 
 # Media (gambar upload lewat CMS) disimpan di public/images
 media_folder: "public/images"
