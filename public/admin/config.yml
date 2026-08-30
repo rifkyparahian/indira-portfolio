@@ -3,16 +3,17 @@
 #  ------------------------------------------------------------
 #  Lokal  : npm run cms  (decap-server) + npm run dev
 #           → akses http://localhost:4321/admin (tanpa login)
-#  Online : deploy ke Netlify → enable Identity + Git Gateway
-#           → akses https://SITUSMU.netlify.app/admin
+#  Online : Deploy Netlify + GitHub OAuth (login via akun GitHub)
+#           → akses https://indira-portfolio-website.netlify.app/admin
 # ============================================================
 
 backend:
-  name: git-gateway
+  name: github
+  repo: rifkyparahian/indira-portfolio
   branch: main
-
-# Aktifkan backend lokal (decap-server) saat develop di mesin sendiri
-local_backend: true
+  base_url: https://indira-portfolio-website.netlify.app
+  auth_endpoint: .netlify/functions/auth
+  auth_scope: repo
 
 # Media (gambar upload lewat CMS) disimpan di public/images
 media_folder: "public/images"

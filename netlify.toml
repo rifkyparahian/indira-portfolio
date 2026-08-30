@@ -1,0 +1,16 @@
+# ============================================================
+#  NETLIFY CONFIG — Indira Rayna Portfolio
+#  ------------------------------------------------------------
+#  - Mengaktifkan Netlify Functions (untuk OAuth login CMS)
+#  - Redirect /admin → halaman admin CMS
+# ============================================================
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/admin"
+  to = "/admin/index.html"
+  status = 200
