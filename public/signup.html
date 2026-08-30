@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Buat Akun CMS — Indira Rayna</title>
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background: #faf5e9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 20px;
+      }
+      .card {
+        background: #fff;
+        border: 3px solid #000;
+        border-radius: 16px;
+        box-shadow: 6px 6px 0 #000;
+        padding: 32px;
+        width: 100%;
+        max-width: 400px;
+      }
+      h1 { font-size: 20px; font-weight: 800; margin-bottom: 6px; }
+      p.sub { font-size: 13px; color: #555; margin-bottom: 20px; }
+      label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 4px; }
+      input {
+        width: 100%;
+        padding: 10px 12px;
+        margin-bottom: 14px;
+        border: 2px solid #000;
+        border-radius: 8px;
+        font-size: 14px;
+      }
+      button {
+        width: 100%;
+        padding: 12px;
+        background: #facc15;
+        border: 2px solid #000;
+        border-radius: 10px;
+        font-weight: 800;
+        font-size: 14px;
+        cursor: pointer;
+        box-shadow: 3px 3px 0 #000;
+      }
+      button:hover { background: #fde047; }
+      #msg {
+        margin-top: 14px;
+        font-size: 13px;
+        padding: 10px;
+        border-radius: 8px;
+        display: none;
+        word-break: break-word;
+      }
+      #msg.ok { background: #dcfce7; border: 1px solid #16a34a; color: #166534; display: block; }
+      #msg.err { background: #fee2e2; border: 1px solid #dc2626; color: #991b1b; display: block; }
+      #msg.info { background: #e0f2fe; border: 1px solid #0284c7; color: #075985; display: block; }
+      code { background: #f3f4f6; padding: 1px 4px; border-radius: 4px; font-size: 12px; }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>🔐 Buat Akun CMS Indira Rayna</h1>
+      <p class="sub">
+        Mendaftar langsung ke Netlify Identity (mode Open aktif). Isi email + password di bawah,
+        lalu klik tombol. Cek email untuk konfirmasi, lalu login di
+        <code>/admin/</code>.
+      </p>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="namakamu@email.com" autocomplete="email" />
+
+      <label for="password">Password (min. 8 karakter)</label>
+      <input type="password" id="password" placeholder="••••••••" autocomplete="new-password" />
+
+      <button id="btn">Daftar / Sign Up</button>
+      <div id="msg"></div>
+    </div>
+
+    <script>
+      const siteURL = 'https://indira-portfolio-website.netlify.app';
+      const btn = document.getElementById('btn');
+      const msg = document.getElementById('msg');
+      const emailEl = document.getElementById('email');
+      const passEl = document.getElementById('password');
+
+      function show(text, type) {
+        msg.className = type;
+        msg.textContent = text;
+      }
+
+      btn.addEventListener('click', async () => {
+        const email = emailEl.value.trim();
+        const password = passEl.value;
+
+        if (!email || !password) return show('Email dan password wajib diisi.', 'err');
+        if (password.length < 8) return show('Password minimal 8 karakter.', 'err');
+
+        show('Mendaftarkan...', 'info');
+        btn.disabled = true;
+
+        try {
+          const res = await fetch(siteURL + '/.netlify/identity/signup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password }),
+          });
+          const data = await res.json().catch(() => ({}));
+
+          if (res.ok) {
+            show(
+              '✅ Berhasil! Cek email ' + email + ' untuk link konfirmasi (cek juga folder Spam). Setelah konfirmasi, buka https://indira-portfolio-website.netlify.app/admin/ dan login.',
+              'ok'
+            );
+          } else {
+            const errMsg = data.msg || data.error || JSON.stringify(data) || 'Gagal (kode ' + res.status + ')';
+            if (res.status === 422 || /exist|taken|already/i.test(errMsg)) {
+              show(
+                '⚠️ Email sudah terdaftar. Pakai opsi "Lupa password" di halaman login /admin/, atau gunakan email lain.',
+                'err'
+              );
+            } else {
+              show('❌ ' + errMsg, 'err');
+            }
+          }
+        } catch (e) {
+          show('❌ Gagal terhubung: ' + e.message, 'err');
+        } finally {
+          btn.disabled = false;
+        }
+      });
+    </script>
+  </body>
+</html>
