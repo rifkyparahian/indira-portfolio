@@ -1,0 +1,81 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  site: CollectionEntry<'settings'>['data'];
+  heroImage: string;
+}
+const { site, heroImage } = Astro.props;
+const { headline, highlight, greeting, tagline, description, tags } = site.hero;
+
+// Pecah judul di sekitar kata yang disorot, mis. "Visual |Magic| For Kids & Brands."
+const [beforeHighlight, afterHighlight] = headline.split(highlight);
+---
+
+<!-- HERO SECTION -->
+<section class="pt-8 md:pt-16 pb-12 px-4 md:px-6 max-w-6xl mx-auto">
+  <!-- Hero Title -->
+  <div class="mb-8 md:mb-12">
+    <p class="font-doodle text-2xl md:text-4xl text-pink-600 font-bold mb-1">{greeting}</p>
+    <h1 class="text-3xl sm:text-5xl md:text-7xl font-black uppercase tracking-tight leading-[1.05] text-black">
+      {beforeHighlight}
+      <span
+        class="bg-yellow-300 px-2 py-0.5 rotate-[-1deg] inline-block border-2 border-black rounded-lg">{highlight}</span
+      >{afterHighlight}
+    </h1>
+  </div>
+
+  <!-- Asymmetric Hero Grid -->
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+    <!-- 3D WebGL Canvas Box -->
+    <div id="playground" class="lg:col-span-5">
+      <div class="brutal-card bg-[#E2F0D9] rounded-2xl overflow-hidden">
+        <div
+          class="border-b-2 border-black bg-[#FFE459] px-3 py-1.5 flex justify-between items-center font-mono text-[11px] font-bold"
+        >
+          <span>● 3D_CANDY_TOY.EXE</span>
+          <span class="text-gray-600">[Spin Me]</span>
+        </div>
+        <div id="three-canvas-container" class="w-full h-64 md:h-72 relative flex items-center justify-center">
+          <div class="absolute bottom-2 left-2 bg-white/90 border border-black px-2 py-0.5 text-[10px] font-mono rounded">
+            Interactive 3D Mesh
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero Profile & Description -->
+    <div class="lg:col-span-7 flex flex-col sm:flex-row gap-4 items-stretch">
+      <!-- Polaroid Foto -->
+      <div class="brutal-card bg-white p-2.5 rounded-xl sm:w-56 shrink-0 rotate-0 sm:rotate-[2deg]">
+        <div class="h-60 sm:h-52 border-2 border-black rounded-lg overflow-hidden relative">
+          <img
+            src={heroImage}
+            alt="Indira Rayna"
+            class="w-full h-full object-cover object-top hover:scale-105 transition duration-300"
+          />
+        </div>
+        <p class="font-doodle text-xl font-bold mt-2 text-center">Indira • Designer &amp; Model</p>
+      </div>
+
+      <!-- Description Box -->
+      <div class="brutal-card bg-[#FFD1DC] p-5 rounded-2xl flex-1 flex flex-col justify-between">
+        <div>
+          <h2 class="text-lg md:text-xl font-black leading-snug mb-2">{tagline}</h2>
+          <p class="text-xs md:text-sm font-mono text-gray-800 leading-relaxed">{description}</p>
+        </div>
+        <div class="flex flex-wrap gap-1.5 pt-4">
+          {
+            tags.map((tag) => (
+              <span class="bg-white px-2 py-0.5 rounded-full border border-black font-mono text-[11px] font-bold">{tag}</span>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import '../scripts/three.ts';
+</script>

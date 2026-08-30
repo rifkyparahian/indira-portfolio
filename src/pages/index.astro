@@ -1,0 +1,44 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Hero from '../components/Hero.astro';
+import Marquee from '../components/Marquee.astro';
+import Portfolio from '../components/Portfolio.astro';
+import Compcard from '../components/Compcard.astro';
+import Contact from '../components/Contact.astro';
+import { getCollection } from 'astro:content';
+
+// ===== Ambil semua konten dari CMS =====
+const designs = (await getCollection('designs')).sort((a, b) => a.data.tag.localeCompare(b.data.tag));
+const looks = (await getCollection('looks')).sort((a, b) => a.data.tag.localeCompare(b.data.tag));
+const [site] = await getCollection('settings');
+
+const heroImage = '/images/hero-indira.png';
+---
+
+<Layout siteTitle={site.data.siteTitle}>
+  <!-- FLOATING STICKERS (HANYA AKTIF DI DESKTOP) -->
+  <div
+    id="sticker1"
+    class="hidden lg:block draggable-sticker top-24 left-10 bg-[#FFB7B2] px-4 py-2 rounded-full border-2 border-black font-doodle text-2xl font-bold rotate-[-8deg] shadow-[4px_4px_0px_#000]"
+  >
+    ✨ drag me anywhere!
+  </div>
+  <div
+    id="sticker2"
+    class="hidden lg:block draggable-sticker top-44 right-10 bg-[#B5EAD7] px-4 py-1.5 rounded-xl border-2 border-black font-mono text-xs font-bold rotate-[6deg] shadow-[4px_4px_0px_#000]"
+  >
+    🍄 100% Original Kidswear Art
+  </div>
+
+  <Navbar siteTitle={site.data.siteTitle} />
+  <Hero site={site.data} heroImage={heroImage} />
+  <Marquee items={site.data.marquee} />
+  <Portfolio designs={designs} looks={looks} />
+  <Compcard looks={looks} stats={site.data.stats} />
+  <Contact contact={site.data.contact} />
+
+  <script>
+    import '../scripts/interactions.ts';
+  </script>
+</Layout>

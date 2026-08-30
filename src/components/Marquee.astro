@@ -1,0 +1,19 @@
+---
+interface Props {
+  items: string[];
+}
+const { items } = Astro.props;
+---
+
+<!-- MARQUEE BANNER -->
+<div class="border-y-2 border-black bg-yellow-300 py-2.5 overflow-hidden font-black text-sm md:text-xl uppercase tracking-wider">
+  <div class="animate-marquee flex gap-6 whitespace-nowrap">
+    {
+      // Konten digandakan 2x agar animasi translateX(-50%) berputar mulus
+      items.map((item) => <span>{item}</span>)
+    }
+    {
+      items.map((item) => <span>{item}</span>)
+    }
+  </div>
+</div>

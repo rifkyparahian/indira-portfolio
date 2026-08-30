@@ -1,0 +1,115 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  looks: CollectionEntry<'looks'>[];
+  stats: { label: string; value: string }[];
+}
+const { looks, stats } = Astro.props;
+---
+
+<!-- MODEL COMPCARD: DENSE & BALANCED MOODBOARD CANVAS -->
+<section id="compcard" class="py-12 px-4 md:px-6 max-w-6xl mx-auto">
+  <div class="brutal-card bg-[#FFDFD3] rounded-3xl p-5 md:p-8 relative overflow-hidden">
+    <!-- Top Bar: Header & Stats -->
+    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-6 gap-4 border-b-2 border-black pb-6">
+      <div class="space-y-1">
+        <div class="flex items-center gap-2">
+          <span class="bg-white border border-black px-3 py-0.5 rounded-full text-xs font-mono font-bold"
+            >MODEL PROFILE</span
+          >
+          <span class="bg-yellow-300 border border-black px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold"
+            >✋ DRAG &amp; EXPLORE LOOKS</span
+          >
+        </div>
+        <h3 class="text-3xl md:text-5xl font-black tracking-tight">COMPCARD &amp; LOOKS</h3>
+        <p class="text-xs md:text-sm font-mono text-gray-800 max-w-xl">
+          Tersedia untuk commercial lookbook pakaian, beauty editorial, kampanye mother &amp; baby, serta content UGC.
+        </p>
+      </div>
+
+      <!-- Quick Stats Strip -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 font-mono text-xs w-full lg:w-auto">
+        {
+          stats.map((stat) => (
+            <div class="bg-white p-2 rounded-xl border-2 border-black text-center shadow-[2px_2px_0px_#000]">
+              <span class="text-gray-500 block text-[9px]">{stat.label}</span>
+              <strong>{stat.value}</strong>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- INTERACTIVE PINBOARD CANVAS -->
+    <div
+      id="compcard-board"
+      class="relative w-full h-[680px] md:h-[620px] bg-[#FFFBF5] border-2 border-black rounded-2xl overflow-hidden shadow-inner select-none"
+    >
+      <!-- Dot Grid Pattern -->
+      <div
+        class="absolute inset-0 bg-[radial-gradient(#000_1.2px,transparent_1.2px)] [background-size:22px_22px] opacity-10 pointer-events-none"
+      ></div>
+
+      <!-- ============ STICKY NOTES PENGISI RUANG (ACCENTS) ============ -->
+      <div
+        class="drag-polaroid absolute top-6 left-6 bg-[#FFEAA7] p-3 rounded-lg border-2 border-black shadow-[4px_4px_0px_#000] rotate-[-6deg] max-w-[200px] cursor-grab active:cursor-grabbing z-0"
+      >
+        <span class="text-[10px] font-mono font-bold bg-yellow-300 px-1.5 py-0.5 rounded border border-black"
+          >PINBOARD NOTES</span
+        >
+        <p class="font-doodle text-2xl font-bold mt-1 leading-none text-gray-900">Creative Model Direction ✨</p>
+        <p class="text-[11px] font-mono text-gray-700 mt-1">Drag polaroids anywhere on this canvas!</p>
+      </div>
+
+      <div
+        class="drag-polaroid absolute bottom-6 left-8 bg-[#B5EAD7] px-3.5 py-2 rounded-xl border-2 border-black shadow-[3px_3px_0px_#000] rotate-[8deg] font-mono text-xs font-bold cursor-grab active:cursor-grabbing z-0 hidden sm:block"
+      >
+        🍼 Available for Mother &amp; Baby Brand Shoots
+      </div>
+
+      <div
+        class="drag-polaroid absolute top-8 right-8 bg-[#FFD1DC] px-4 py-2 rounded-xl border-2 border-black shadow-[3px_3px_0px_#000] rotate-[-4deg] font-mono text-xs font-bold cursor-grab active:cursor-grabbing z-0 hidden sm:block"
+      >
+        💄 Beauty &amp; Natural Glow Editorial
+      </div>
+
+      <!-- ============ 4 LARGE POLAROID LOOKS (dari CMS) ============ -->
+      {
+        looks.map((look, index) => (
+          <div
+            class={`drag-polaroid absolute brutal-card bg-white p-3 rounded-2xl w-56 sm:w-64 md:w-72 cursor-grab active:cursor-grabbing hover:scale-105 transition-transform duration-200 ${look.data.position} ${look.data.rotate} ${look.data.zClass}`}
+          >
+            <div class="h-64 sm:h-72 md:h-80 border-2 border-black rounded-xl overflow-hidden bg-gray-100 pointer-events-none">
+              <img
+                src={look.data.image}
+                alt={look.data.alt || look.data.title}
+                class="w-full h-full object-cover object-top"
+              />
+            </div>
+            <div class="mt-2.5 flex justify-between items-center pointer-events-none">
+              <span class={`font-doodle text-xl font-bold ${look.data.labelClass}`}>{look.data.title}</span>
+              <span
+                class={`text-[10px] font-mono ${look.data.badgeBg} px-2 py-0.5 rounded border border-black font-bold`}
+                >{look.data.tag}</span
+              >
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- Footer Bar -->
+    <div
+      class="mt-5 bg-white border-2 border-black p-4 rounded-2xl flex flex-col sm:flex-row justify-between items-center gap-3 text-xs font-mono"
+    >
+      <span class="text-gray-800">📸 Booking Photoshoot &amp; Commercial Inquiries:</span>
+      <a
+        href="#contact"
+        class="bg-yellow-300 border border-black px-5 py-2 rounded-full font-bold shadow-[2px_2px_0px_#000] hover:bg-yellow-400 transition"
+      >
+        Direct Connect 💬
+      </a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,30 @@
+{
+  "siteTitle": "INDIRA RAYNA",
+  "hero": {
+    "greeting": "Hello there! 🧸",
+    "headline": "Visual Magic For Kids & Brands.",
+    "highlight": "Magic",
+    "tagline": "Graphic Designer specializing in kidswear apparel & Commercial Model.",
+    "description": "Menggabungkan motif ilustrasi anak, tech-pack pakaian siap produksi, label packaging, dan visual photoshoot lookbook.",
+    "tags": ["#Kidswear", "#ApparelDesign", "#ModelLookbook"]
+  },
+  "marquee": [
+    "★ APPAREL TECH-PACK",
+    "✦ MODELING LOOKBOOK",
+    "★ CHARACTER DOODLE",
+    "✦ PACKAGING & HANGTAGS",
+    "★ CAMPAIGN SHOOT",
+    "✦ PATTERN DESIGN"
+  ],
+  "stats": [
+    { "label": "HEIGHT", "value": "150 cm" },
+    { "label": "WEIGHT", "value": "40 kg" },
+    { "label": "HAIR", "value": "Dark Brown" },
+    { "label": "LOCATION", "value": "Tangerang/JKT" }
+  ],
+  "contact": {
+    "email": "indirarayna@example.com",
+    "instagram": "https://instagram.com",
+    "footer": "© 2026 INDIRA RAYNA • KIDS GRAPHIC DESIGNER & MODEL"
+  }
+}

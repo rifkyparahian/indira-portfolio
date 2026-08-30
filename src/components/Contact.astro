@@ -1,0 +1,44 @@
+---
+interface Props {
+  contact: {
+    email: string;
+    instagram: string;
+    footer: string;
+  };
+}
+const { contact } = Astro.props;
+---
+
+<!-- CONTACT & COLLABORATION -->
+<section id="contact" class="py-16 px-4 md:px-6 max-w-4xl mx-auto">
+  <div class="brutal-card bg-white rounded-3xl overflow-hidden">
+    <div class="border-b-2 border-black bg-[#FFE459] px-4 py-2 flex justify-between items-center font-mono text-xs font-bold">
+      <div class="flex gap-1.5">
+        <span class="w-3 h-3 rounded-full bg-red-400 border border-black inline-block"></span>
+        <span class="w-3 h-3 rounded-full bg-yellow-400 border border-black inline-block"></span>
+        <span class="w-3 h-3 rounded-full bg-green-400 border border-black inline-block"></span>
+      </div>
+      <span>CONNECT_PORTAL.EXE</span>
+      <span>✨</span>
+    </div>
+
+    <div class="p-6 md:p-10 text-center space-y-4">
+      <div class="font-doodle text-3xl md:text-4xl text-purple-600 font-bold">Let's create something joyful!</div>
+      <h2 class="text-2xl md:text-4xl font-black uppercase">READY TO COLLABORATE?</h2>
+      <p class="font-mono text-xs md:text-sm text-gray-700 max-w-md mx-auto">
+        Terbuka untuk proyek ilustrasi pakaian anak, tech-pack sablon/bordir, serta booking model foto katalog.
+      </p>
+
+      <div class="flex flex-wrap justify-center gap-3 pt-3">
+        <a href={`mailto:${contact.email}`} class="brutal-card bg-yellow-300 font-bold px-5 py-2.5 rounded-full text-xs md:text-sm hover:bg-yellow-400">
+          ✉️ EMAIL SAYA
+        </a>
+        <a href={contact.instagram} target="_blank" class="brutal-card bg-[#FFB7B2] font-bold px-5 py-2.5 rounded-full text-xs md:text-sm hover:bg-pink-300">
+          📲 INSTAGRAM DM
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center font-mono text-[10px] md:text-xs text-gray-500 mt-8">{contact.footer}</div>
+</section>

@@ -1,0 +1,136 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  designs: CollectionEntry<'designs'>[];
+  looks: CollectionEntry<'looks'>[];
+}
+const { designs, looks } = Astro.props;
+---
+
+<!-- DUAL-PORTFOLIO SECTION (DESIGN PUZZLE & MODEL COMPCARD SWITCHER) -->
+<section id="portfolio" class="py-14 md:py-20 px-4 md:px-6 max-w-6xl mx-auto">
+  <!-- Top Bar: Title & Tab Switcher -->
+  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-8 gap-4">
+    <div>
+      <div class="font-doodle text-2xl md:text-3xl text-amber-600 font-bold">Selected Works</div>
+      <h2 class="text-3xl md:text-5xl font-black uppercase tracking-tight text-black flex items-center gap-2">
+        CREATIVE <span class="bg-[#B5EAD7] px-2 py-0.5 border-2 border-black rounded-lg">SHOWCASE</span>
+      </h2>
+    </div>
+
+    <!-- Tab Switcher Buttons -->
+    <div class="inline-flex bg-white p-1.5 rounded-2xl border-2 border-black shadow-[4px_4px_0px_#000] gap-2">
+      <button
+        id="tab-btn-design"
+        class="px-4 py-2 rounded-xl font-mono text-xs md:text-sm font-bold bg-yellow-300 border-2 border-black shadow-[2px_2px_0px_#000] transition-all"
+      >
+        🎨 Kids Design (Puzzle)
+      </button>
+      <button
+        id="tab-btn-model"
+        class="px-4 py-2 rounded-xl font-mono text-xs md:text-sm font-bold bg-transparent text-gray-700 hover:text-black transition-all"
+      >
+        👗 Modeling Compcard
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= VIEW 1: KIDS DESIGN PUZZLE ================= -->
+  <div id="view-design" class="block">
+    <div class="bg-[#FFFDF0] border-2 border-black rounded-2xl md:rounded-3xl p-4 md:p-6 shadow-[6px_6px_0px_#000]">
+      <div class="flex justify-between items-center mb-5 pb-3 border-b-2 border-black/10 text-xs font-mono">
+        <span class="font-bold text-gray-700">● {designs.length} PIECES COLLECTED</span>
+        <span class="bg-yellow-200 px-2 py-0.5 rounded border border-black font-bold">🧩 Geser &amp; Tukar Posisi Kartu</span>
+      </div>
+
+      <!-- PUZZLE GRID (dari CMS) -->
+      <div id="puzzle-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5">
+        {
+          designs.map((design) => (
+            <div class="puzzle-card brutal-card bg-white p-2.5 rounded-xl cursor-grab active:cursor-grabbing select-none">
+              <div
+                class={`h-36 sm:h-44 ${design.data.cardBg} border-2 border-black rounded-lg overflow-hidden p-1.5 flex items-center justify-center`}
+              >
+                <img
+                  src={design.data.image}
+                  alt={design.data.alt || design.data.title}
+                  class="w-full h-full object-contain pointer-events-none"
+                />
+              </div>
+              <div class="mt-2 flex justify-between items-center">
+                <span class="font-bold text-[11px] sm:text-xs truncate">{design.data.title}</span>
+                <span
+                  class={`text-[9px] font-mono ${design.data.badgeBg} px-1 py-0.5 rounded border border-black`}
+                  >{design.data.tag}</span
+                >
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= VIEW 2: MODELING LOOKBOOK ================= -->
+  <div id="view-model" class="hidden">
+    <div class="brutal-card bg-[#FFDFD3] rounded-2xl md:rounded-3xl p-4 md:p-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center mb-6">
+        <div class="lg:col-span-6 space-y-2">
+          <span class="bg-white border border-black px-3 py-0.5 rounded-full text-xs font-mono font-bold"
+            >MODEL PROFILE</span
+          >
+          <h3 class="text-2xl md:text-4xl font-black">COMMERCIAL LOOKBOOK</h3>
+          <p class="text-xs md:text-sm font-mono text-gray-800">
+            Tersedia untuk commercial photoshoot pakaian anak, fashion streetwear, beauty editorial, dan UGC.
+          </p>
+        </div>
+
+        <div class="lg:col-span-6 grid grid-cols-2 sm:grid-cols-4 gap-2 font-mono text-xs">
+          <div class="bg-white p-2 rounded-xl border-2 border-black text-center shadow-[2px_2px_0px_#000]">
+            <span class="text-gray-500 block text-[9px]">HEIGHT</span>
+            <strong>150 cm</strong>
+          </div>
+          <div class="bg-white p-2 rounded-xl border-2 border-black text-center shadow-[2px_2px_0px_#000]">
+            <span class="text-gray-500 block text-[9px]">WEIGHT</span>
+            <strong>40 kg</strong>
+          </div>
+          <div class="bg-white p-2 rounded-xl border-2 border-black text-center shadow-[2px_2px_0px_#000]">
+            <span class="text-gray-500 block text-[9px]">HAIR</span>
+            <strong>Dark Brown</strong>
+          </div>
+          <div class="bg-white p-2 rounded-xl border-2 border-black text-center shadow-[2px_2px_0px_#000]">
+            <span class="text-gray-500 block text-[9px]">LOCATION</span>
+            <strong>Tangerang/JKT</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lookbook Grid (dari CMS) -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+        {
+          looks.map((look) => (
+            <div
+              class={`brutal-card bg-white p-2.5 rounded-2xl ${look.data.rotate} hover:rotate-0 transition duration-200`}
+            >
+              <div class="h-56 sm:h-72 border-2 border-black rounded-xl overflow-hidden bg-gray-100">
+                <img
+                  src={look.data.image}
+                  alt={look.data.alt || look.data.title}
+                  class="w-full h-full object-cover object-top"
+                />
+              </div>
+              <div class="mt-2 flex justify-between items-center">
+                <span class={`font-doodle text-base font-bold ${look.data.labelClass}`}>{look.data.title}</span>
+                <span
+                  class={`text-[9px] font-mono ${look.data.badgeBg} px-1.5 py-0.5 rounded border border-black font-bold`}
+                  >{look.data.tag}</span
+                >
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>

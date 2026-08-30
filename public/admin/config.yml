@@ -1,0 +1,148 @@
+# ============================================================
+#  DECAP CMS CONFIG — Indira Rayna Portfolio
+#  ------------------------------------------------------------
+#  Lokal  : npm run cms  (decap-server) + npm run dev
+#           → akses http://localhost:4321/admin (tanpa login)
+#  Online : deploy ke Netlify → enable Identity + Git Gateway
+#           → akses https://SITUSMU.netlify.app/admin
+# ============================================================
+
+backend:
+  name: git-gateway
+  branch: main
+
+# Aktifkan backend lokal (decap-server) saat develop di mesin sendiri
+local_backend: true
+
+# Media (gambar upload lewat CMS) disimpan di public/images
+media_folder: "public/images"
+public_folder: "/images"
+
+collections:
+  # ----------------------------------------------------------
+  # 1. KARTU DESIGN (PUZZLE 12)
+  # ----------------------------------------------------------
+  - name: "designs"
+    label: "🎨 Kartu Design (Puzzle)"
+    folder: "src/content/designs"
+    create: true
+    identifier_field: "title"
+    format: "frontmatter"
+    fields:
+      - { label: "Judul", name: "title", widget: "string" }
+      - { label: "Nomor Tag (contoh: #01)", name: "tag", widget: "string" }
+      - { label: "Gambar", name: "image", widget: "image" }
+      - { label: "Alt Text", name: "alt", widget: "string", required: false }
+      - label: "Warna Background Kartu"
+        name: "cardBg"
+        widget: "select"
+        options:
+          - "bg-[#FFF8E7]"
+          - "bg-[#FFE459]/20"
+          - "bg-[#E0F2FE]"
+          - "bg-[#FFE8E8]"
+      - label: "Warna Badge"
+        name: "badgeBg"
+        widget: "select"
+        options:
+          - "bg-pink-100"
+          - "bg-orange-100"
+          - "bg-sky-100"
+          - "bg-red-100"
+          - "bg-yellow-100"
+          - "bg-blue-100"
+
+  # ----------------------------------------------------------
+  # 2. FOTO LOOK (COMPCARD & LOOKBOOK)
+  # ----------------------------------------------------------
+  - name: "looks"
+    label: "📸 Foto Look (Compcard & Lookbook)"
+    folder: "src/content/looks"
+    create: true
+    identifier_field: "title"
+    format: "frontmatter"
+    fields:
+      - { label: "Judul", name: "title", widget: "string" }
+      - { label: "Tag (contoh: #Look01)", name: "tag", widget: "string" }
+      - { label: "Gambar", name: "image", widget: "image" }
+      - { label: "Alt Text", name: "alt", widget: "string", required: false }
+      - label: "Warna Judul"
+        name: "labelClass"
+        widget: "select"
+        options:
+          - "text-gray-900"
+          - "text-emerald-600"
+          - "text-sky-600"
+          - "text-pink-600"
+      - label: "Warna Badge"
+        name: "badgeBg"
+        widget: "select"
+        options:
+          - "bg-yellow-200"
+          - "bg-emerald-200"
+          - "bg-pink-200"
+          - "bg-sky-200"
+      - label: "Rotasi Kartu"
+        name: "rotate"
+        widget: "select"
+        options:
+          - "rotate-0"
+          - "rotate-[-1.5deg]"
+          - "rotate-[1.5deg]"
+          - "rotate-[-2deg]"
+          - "rotate-[2deg]"
+          - "rotate-[-4deg]"
+          - "rotate-[5deg]"
+          - "rotate-[3deg]"
+          - "rotate-[-5deg]"
+      - label: "Posisi di Compcard (contoh: top-12 left-8 md:left-24)"
+        name: "position"
+        widget: "string"
+      - label: "Urutan Lapisan (Z-Index)"
+        name: "zClass"
+        widget: "select"
+        options: ["z-10", "z-20", "z-30", "z-40"]
+
+  # ----------------------------------------------------------
+  # 3. PENGATURAN WEBSITE
+  # ----------------------------------------------------------
+  - name: "settings"
+    label: "⚙️ Pengaturan Website"
+    files:
+      - name: "site"
+        label: "Pengaturan Utama"
+        file: "src/content/settings/site.json"
+        fields:
+          - { label: "Judul Website", name: "siteTitle", widget: "string" }
+          - label: "Hero Section"
+            name: "hero"
+            widget: "object"
+            fields:
+              - { label: "Sapaan (doodle)", name: "greeting", widget: "string" }
+              - { label: "Judul Utama", name: "headline", widget: "string" }
+              - { label: "Kata yang Disorot", name: "highlight", widget: "string" }
+              - { label: "Sub Judul", name: "tagline", widget: "text" }
+              - { label: "Deskripsi", name: "description", widget: "text" }
+              - {
+                  label: "Tags",
+                  name: "tags",
+                  widget: "list",
+                  field: { label: "Tag", name: "tag", widget: "string" },
+                }
+          - label: "Marquee (Banner Berjalan)"
+            name: "marquee"
+            widget: "list"
+            field: { label: "Teks", name: "item", widget: "string" }
+          - label: "Statistik Model"
+            name: "stats"
+            widget: "list"
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "Nilai", name: "value", widget: "string" }
+          - label: "Kontak"
+            name: "contact"
+            widget: "object"
+            fields:
+              - { label: "Email", name: "email", widget: "string" }
+              - { label: "URL Instagram", name: "instagram", widget: "string" }
+              - { label: "Teks Footer", name: "footer", widget: "string" }

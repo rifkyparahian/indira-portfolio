@@ -1,0 +1,61 @@
+/* ============================================================
+   GLOBAL STYLES — Indira Rayna Portfolio
+   (diimpor dari Layout; menimpa base Tailwind secara natural)
+   ============================================================ */
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: #faf5e9;
+  color: #0f0f0f;
+}
+
+.font-doodle {
+  font-family: 'Reenie Beanie', cursive;
+}
+
+.font-mono {
+  font-family: 'Space Mono', monospace;
+}
+
+/* Neo-Brutalist Box Shadow */
+.brutal-card {
+  border: 2.5px solid #000;
+  box-shadow: 4px 4px 0px #000;
+  transition: all 0.2s ease;
+}
+@media (min-width: 768px) {
+  .brutal-card {
+    border-width: 3px;
+    box-shadow: 6px 6px 0px #000;
+  }
+  .brutal-card:hover {
+    box-shadow: 9px 9px 0px #000;
+  }
+}
+
+/* Floating Draggable Stickers (Desktop Only) */
+.draggable-sticker {
+  position: absolute;
+  cursor: grab;
+  user-select: none;
+  z-index: 35;
+}
+.draggable-sticker:active {
+  cursor: grabbing;
+  transform: scale(1.05) !important;
+}
+
+/* Marquee Infinite Banner */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  display: flex;
+  width: 200%;
+  animation: marquee 18s linear infinite;
+}
